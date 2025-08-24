@@ -98,7 +98,7 @@ An ensemble approach combining:
 *Figure: Architecture diagram for Version 2.*
 
 **Results:**  
-Lower F1-score due to limited context
+Lower F1-score(0.89) due to limited context
 
 ![Version 2 Results](./images/version2_output.png)
 *Figure: Output metrics for Version 2.*
@@ -122,23 +122,25 @@ Lower F1-score due to limited context
 - Precision: 0.93 | Recall: 0.88 | F1-score: 0.90 | Accuracy: 1.00
 
 **Disadvantages:**
-- **Struggles with unseen behaviors:** While rare pattern detection is improved, the model still cannot generalize well to entirely new fraud tactics.
+- **Struggles with unseen behaviors:** While rare pattern detection is improved, the model still cannot generalize well to entirely new customer behaviours.
 - **Complexity:** Relevance scoring adds computational overhead.
-- **Potential for missed context:** If relevance scoring fails, important transactions may be ignored.
 
 ---
 
 ### Version 4: Global Model + Neighbor Relevance Transformer
 
-- Sequence includes: current transaction, self-history, and neighbor history (from geospatial proximity)
+- Transformer sequence includes: current transaction, self-history, and neighbor history (from geospatial proximity)
 - Uses relevance and neighbor masks
 - Sequence length: (1 + k + f*n)  
   (1 current + k self-history + f neighbors × n neighbor-history)
+- each row in the sequence will contain relevance score
+- each row will also include aggregated neighbor mask.
 
 ![Neighbourhood](./images/neighbourhood.png)
 *Figure: Visualization of transaction neighborhood and proximity.*
 
-- Solves rare/new pattern detection
+- Improved recognition of rare behaviours
+- Should improve generalization to unseen behaviors
 - Computationally expensive; experiment paused due to hardware constraints
 
 ---
